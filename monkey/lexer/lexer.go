@@ -6,9 +6,9 @@ import (
 
 type Lexer struct {
 	input         string
-	position      int  // 現在入力中の文字の位置
-	readPostition int  // 次に読み込む文字の位置（postitionにある文字の次の文字）
-	ch            byte // 現在入力中の文字（バイト）
+	position      int  // current postion in input (points to current char)
+	readPostition int  // current reading postition in input (after current char)
+	ch            byte // current char under examination (a character located by "position" in "input")
 }
 
 func New(input string) *Lexer {
@@ -17,7 +17,7 @@ func New(input string) *Lexer {
 	return l
 }
 
-// readChar：次の一文字を読んでinput文字列の位置を進める関数
+// readChar :a Helper function to read a next character and advance the postion in the input string
 func (l *Lexer) readChar() {
 	if l.readPostition >= len(l.input) {
 		l.ch = 0
@@ -47,9 +47,9 @@ func (l *Lexer) NextToken() token.Token {
 	case '+':
 		tok = newToken(token.PLUS, l.ch)
 	case '{':
-		tok = newToken(token.RBRACE, l.ch)
-	case '}':
 		tok = newToken(token.LBRACE, l.ch)
+	case '}':
+		tok = newToken(token.RBRACE, l.ch)
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF

@@ -1,5 +1,40 @@
 package token
 
+// Token's Data Type
+type TokenType string
+
+// Literals
+type Token struct {
+	Type    TokenType
+	Literal string
+}
+
+const (
+	ILLEGAL = "ILLEGAL" // ILLEGAL: a Unknown token/character
+	EOF     = "EOF"     // EOF (End of File): Parsing Stop Point
+
+	// Identifiers + Literals
+	IDENT = "IDENT"
+	INT   = "INT"
+
+	// Operators
+	ASSIGN = "="
+	PLUS   = "+"
+
+	// Delimters (Separater)
+	COMMA     = ","
+	SEMICOLON = ";"
+
+	LPAREN = "("
+	RPAREN = ")"
+	LBRACE = "{"
+	RBRACE = "}"
+
+	// Keywords
+	FUNCTION = "FUNCTION"
+	LET      = "LET"
+)
+
 var keywords = map[string]TokenType{
 	"fn":  FUNCTION,
 	"let": LET,
@@ -11,38 +46,3 @@ func LookupIdent(ident string) TokenType {
 	}
 	return IDENT
 }
-
-// データ型
-type TokenType string
-
-// リテラル
-type Token struct {
-	Type    TokenType
-	Literal string
-}
-
-const (
-	ILLEGAL = "ILLEGAL" // ILLEGAL：未知のトークン、文字
-	EOF     = "EOF"     // EOF：ファイルの終端（End of File）
-
-	// 識別子＋リテラル
-	IDENT = "IDENT"
-	INT   = "INT"
-
-	// 演算子
-	ASSIGN = "="
-	PLUS   = "+"
-
-	// デリミタ（区切り文字）
-	COMMA     = ","
-	SEMICOLON = ";"
-
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
-
-	// キーワード
-	FUNCTION = "FUNCTION"
-	LET      = "LET"
-)
