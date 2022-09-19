@@ -3,12 +3,12 @@
 digraph {
     node [shape=box];
 
-    A[label="ソースコード"];
-    B[label="トークン列"];
-    C[label="抽象構文木（AST）"];
+    A[label="Sorce Code"];
+    B[label="Tokens"];
+    C[label="Abstract Syntax Tree \n（AST）"];
 
-    A->B[label="    字句解析"];
-    B->C[label="    構文解析"];
+    A->B[label="    Lexing"];
+    B->C[label="    Parsing"];
 }
 ```
 
