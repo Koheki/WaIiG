@@ -7,8 +7,8 @@ digraph {
     B[label="Tokens"];
     C[label="Abstract Syntax Tree \n（AST）"];
 
-    A->B[label="    Lexing"];
-    B->C[label="    Parsing"];
+    A->B[label="    Lexing（字句解析）"];
+    B->C[label="    Parsing（構文解析）"];
 }
 ```
 
@@ -53,7 +53,7 @@ let result = add(five, ten);
 このとき必要なトークンの種類は
 - 識別子（変数名）<br>
     ( x, y, add, result )
-- キーワード（予約語$^1$、識別子として利用できない文字列）<br>
+- キーワード（予約語 $^1$、識別子として利用できない文字列）<br>
     ( let, fn )
 - 記号<br>
     (「 ( 」,「 ) 」,「 { 」,「 } 」,「 = 」,「 , 」,「 ; 」)
@@ -68,13 +68,13 @@ let result = add(five, ten);
 （元気がある時にやっておいてください）
 
 
-`monkey/token/token.go`
+#### `monkey/token/token.go`
 
 `LookupIdent()`
 文字列がキーワードか識別子か判定してデータ型を返す
 
 
-`monkey/lexer/lexer.go`
+#### `monkey/lexer/lexer.go`
 
 `New()`
 
@@ -121,7 +121,7 @@ l ( := Lexer ) の中の
 `isDigit()`が`False` ( = `l.ch`の文字が`[0-9]` でない) になるまで`readChar`で読み進め、入力された文字からそれより前の文字までの文字列を返す
 
 
-`monkey/lexer/lexer_test.go`
+#### `monkey/lexer/lexer_test.go`
 
 ### lexer の拡張（1.4）
 
@@ -146,20 +146,45 @@ digraph repl {
     center->{Print, Evaluate}[color=transparent];
 }
 ```
-
-
 プログラミング言語の実行環境の１つで、ユーザが１行（１つ以上の式）の入力すると、インタプリタが
 1. 読み取り
 2. 評価（実行）
 3. 次の行に結果を表示
 4. 再び入力可能状態に戻る
 
-する対話的な環境
-
-コンソール、インタラクティブモードのがわかりやすい
+する対話的な環境。
+コンソール、インタラクティブモードの呼び方のがわかりやすい
 
 
 ## Chapter 2 構文解析
+
+トップダウン構文解析
+
+ボトムダウン構文解析
+
+
+`let <identifier> = <expression>`
+
+- Expressions: 式
+- Statements: 文
+
+`let x = 5;`
+
+```dot
+digraph {
+
+A [shape=record, label="{*ast.Program | Statements}"];
+B [shape=record, label="{*ast.LetStatement | <p>Name | Value}"];
+C [shape=record, label="{*ast.Identifier}"];
+D [shape=record, label="{*ast.Expression}"];
+
+A->B;
+B:p -> C;
+B:p -> D;
+
+}
+```
+
 
 
 ## Chapter 3 評価
